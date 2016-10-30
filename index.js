@@ -1,19 +1,14 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var user = require("./models/user");
 
-var Schema = mongoose.Schema;
 var app = express();
+var User = user.User;
 
 mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/pictures")
 
-var user_schema = new Schema({
-  email: String,
-  password: String
-})
-
-var User = mongoose.model("User", user_schema);
 
 app.use("/app",express.static("public"))
 app.use(bodyParser.json()) // para peticiones application/json
@@ -36,7 +31,10 @@ app.get("/login", function (req, res) {
 
 app.post("/users", function (req, res) {
   
-  var user = new User({email: req.body.email, password: req.body.password});
+  var user = new User({email: req.body.email, 
+                      password: req.body.password,
+                      password_confirmation: req.body.passwordConfirmation
+                    });
 
   user.save(function () {
     res.send("Datos recibidos")
