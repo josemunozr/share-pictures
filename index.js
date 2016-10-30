@@ -22,7 +22,6 @@ app.get("/", function (req, res) {
 
 app.get("/login", function (req, res) {
   User.find(function (err, doc){
-    console.log(doc)
     res.render("login")
   })
 
@@ -36,7 +35,8 @@ app.post("/users", function (req, res) {
                       password_confirmation: req.body.passwordConfirmation
                     });
 
-  user.save(function () {
+  user.save(function (err) {
+    if (err) console.log(String(err))
     res.send("Datos recibidos")
   })
 
