@@ -6,18 +6,17 @@ var user_schema = new Schema({
   username: {type: String, required: true, maxlength: [50, "Username muy extenso"]},
   password: {type: String, required: true, minlength: [8, "Password muy corto"]},
   age: {type: Number, min: [17, "Edad minima permitida 17 años"]},
-  email: String,
   date_of_birth: Date,
   sex: {type: String, enum:{ values: ["M", "F"], message: "Opción invalida"}}
 });
 
 user_schema.virtual("password_confirmation")
-            .get(function () {
-              return this.passConfirm;
-            })
-            .set(function (pwd) {
-              this.passConfirm = pwd;
-            })
+  .get(function () {
+    return this.passConfirm;
+  })
+  .set(function (pwd) {
+    this.passConfirm = pwd;
+  })
 
 var User = mongoose.model("User", user_schema);
 
