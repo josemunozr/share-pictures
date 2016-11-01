@@ -60,7 +60,7 @@ app.post("/session", function (req, res) {
     if (err) res.send(String(err));
     if (user) {
       req.session.user_id = user._id;
-      res.send("Usuario logeado correctamente: " + JSON.stringify(user));
+      res.redirect("/app");
     }else {
       res.send("Usuario o contraseña incorrectos");
     }
