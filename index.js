@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var session = require("express-session");
 var user = require("./models/user");
+var router = require("./router");
 
 var app = express();
 var User = user.User;
@@ -10,7 +11,7 @@ var User = user.User;
 mongoose.connect("mongodb://localhost/pictures")
 
 
-app.use("/app",express.static("public"))
+app.use(express.static("public"))
 app.use(bodyParser.json()) // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
@@ -18,6 +19,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+
+
 
 app.set("view engine","jade");
 
@@ -49,7 +52,6 @@ app.post("/users", function (req, res) {
       }, function (err) {
         if (err) res.send("Error al guardar tus datos: " + err.message)
       })
-
 })
 
 app.post("/session", function (req, res) {
@@ -63,8 +65,10 @@ app.post("/session", function (req, res) {
       res.send("Usuario o contraseña incorrectos");
     }
   })
-
 })
+
+
+app.use("/app", router);
 
 app.listen(8080, function () {
   console.log("listen server at http://localhost:8080/");
