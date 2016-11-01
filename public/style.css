@@ -1,3 +1,14 @@
-body {
-	
+body, html {
+  height: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.text-left {
+  text-align: left;
+}
+.text-right {
+  text-align: right;
 }

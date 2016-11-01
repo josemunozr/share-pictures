@@ -26,7 +26,6 @@ app.use(session({
 app.set("view engine","jade");
 
 app.get("/", function (req, res) {
-  console.log(req.session.user_id);
   res.render("index");
 })
 
