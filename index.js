@@ -6,7 +6,6 @@ var user = require("./models/user");
 var app = express();
 var User = user.User;
 
-mongoose.Promise = global.Promise;
 mongoose.connect("mongodb://localhost/pictures")
 
 
@@ -33,10 +32,12 @@ app.post("/users", function (req, res) {
     username: req.body.username
   });
 
-  user.save(function (err) {
-    if (err) console.log(String(err))
-    res.send("Datos recibidos")
-  })
+  user.save()
+      .then(function (doc) {
+        res.send("usuario creado correctamente");
+      }, function (err) {
+        if (err) res.send("Error al guardar tus datos: " + err.message)
+      })
 
   User.find(function (err, doc){
     console.log(doc)
