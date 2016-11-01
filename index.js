@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var session = require("express-session");
 var user = require("./models/user");
 var router = require("./router");
+var session_mdl = require("./middlewares/session");
 
 var app = express();
 var User = user.User;
@@ -68,6 +69,7 @@ app.post("/session", function (req, res) {
 })
 
 
+app.use("/app", session_mdl);
 app.use("/app", router);
 
 app.listen(8080, function () {
