@@ -19,8 +19,15 @@ app.get("/", function (req, res) {
   res.render("index");
 })
 
-app.get("/login", function (req, res) {
-  res.render("login")
+app.get("/singin", function (req, res) {
+  User.find(function (err, docs){
+    console.log(docs)
+  })
+  res.render("singin")
+})
+
+app.get("/singup", function (req, res) {
+  res.render("singup")
 })
 
 app.post("/users", function (req, res) {
@@ -42,10 +49,22 @@ app.post("/users", function (req, res) {
   User.find(function (err, doc){
     console.log(doc)
   })
+})
 
+app.post("/session", function (req, res) {
+  
+  User.findOne({email: req.body.email, password: req.body.password}, function (err, docs) {
+    if (err) res.send(String(err));
+    if (docs) {
+      console.log(docs);
+      res.send("Usuario logeado correctamente: " + JSON.stringify(docs));
+    }else {
+      res.send("Usuario o contraseña incorrectos");
+    }
+  })
 
 })
 
 app.listen(8080, function () {
-  console.log("listen server at http://localhost:8080/")
+  console.log("listen server at http://localhost:8080/");
 });
