@@ -12,7 +12,7 @@ var User = user.User;
 mongoose.connect("mongodb://localhost/pictures")
 
 
-app.use(express.static("public"))
+app.use("/public", express.static("public"))
 app.use(bodyParser.json()) // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(session({
