@@ -1,0 +1,15 @@
+extends ../../layout.jade
+block contenido
+  .row.center-xs.middle-xs.full-height
+    .col-xs-6
+      .box
+        form(action="/pictures", method="POST", class="text-left")
+          .form-group
+            label(form="title") Título
+            input(type="text", name="title",placeholder="Título",id="title",class="form-control")
+          .form-group
+            label(form="file") Imagen
+            input(type="file", name="file",placeholder="Password",id="file",class="form-control")
+          .row
+            .col-xs-6
+              input(type="submit", value="Subir", class="btn btn-info")
