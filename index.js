@@ -1,7 +1,8 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-var session = require("express-session");
+/*var session = require("express-session");*/
+var cookieSession = require("cookie-session");
 var user = require("./models/user");
 var router = require("./router");
 var session_mdl = require("./middlewares/session");
@@ -15,13 +16,16 @@ mongoose.connect("mongodb://localhost/pictures")
 app.use("/public", express.static("public"))
 app.use(bodyParser.json()) // para peticiones application/json
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(session({
+/*app.use(session({
   secret: "asdfso7y3948gfdjbn42",
   resave: false,
   saveUninitialized: false
 }))
-
-
+*/
+app.use(cookieSession({
+  name: "picture-session",
+  keys: ["key-1","key-2"]
+}))
 
 app.set("view engine","jade");
 
