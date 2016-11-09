@@ -11,7 +11,9 @@ router.get("/pictures/new", function (req, res) {
 });
 
 router.get("/pictures/:id/edit", function (req, res) {
-
+  Picture.findById(req.params.id, function (err, picture) {
+      res.render("app/pictures/edit",{picture: picture});
+    })
 });
 
 router.route("/pictures/:id")
@@ -21,7 +23,17 @@ router.route("/pictures/:id")
     })
   })
   .put(function (req, res) {
+     Picture.findById(req.params.id, function (err, picture) {
+      picture.title = req.body.title;
+      picture.save(function (err) {
+        if(!err){
+          res.render("app/pictures/show", {picture : picture});
+        }else {
+          res.render("app/picture/" + picture._id + "/edit", {picture : picture});
+        }
+      });
 
+    })
   })
   .delete(function (req, res) {
 
@@ -29,7 +41,10 @@ router.route("/pictures/:id")
 
 router.route("/pictures")
   .get(function (req, res) {
-
+    Picture.find({}, function (err, pictures) {
+      if(err) {res.redirect("/app"); return; }
+      res.render("app/pictures/index", {pictures : pictures});
+    })
   })
   .post(function (req, res) {
     var picture = new Picture({

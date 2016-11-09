@@ -1,0 +1,13 @@
+extends ../../layout.jade
+block contenido
+  .row.center-xs.middle-xs.full-height
+    .col-xs-6
+      .box
+        h1 Editar Imagen
+        form(action="/app/pictures/#{picture._id}?_method=PUT", method="POST", class="text-left")
+          .form-group
+            label(form="title") Título
+            input(type="text", name="title",value="#{picture.title}", placeholder="Título",id="title",class="form-control")
+          .row
+            .col-xs-6
+              input(type="submit", value="Guardar", class="btn btn-info")

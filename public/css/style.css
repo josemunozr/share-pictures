@@ -12,3 +12,48 @@ body, html {
 .text-right {
   text-align: right;
 }
+
+.margin-right_little{
+  margin-right: 1em;
+}
+
+.border-grey {
+  border: 1px solid #eee;
+}
+
+.center-box {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.middle-text {
+  line-height: 5em;
+}
+
+.tr:nth-of-type(odd){
+  background-color: #eee;
+}
+
+nav {
+  background-color: #333;
+  height: 2.5em;
+  padding: .5em;
+}
+
+nav ul {
+  list-style: none;
+  float: right;
+}
+
+nav ul li{
+  display: inline-block;
+  margin-right: 1em;
+  font-size: 1.2em;
+}
+
+nav ul li a{
+  color: white;
+}
+nav ul li a:hover{
+  color: white;
+}

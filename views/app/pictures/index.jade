@@ -1,0 +1,13 @@
+extends ../../layout.jade
+block contenido
+  h1 Mis Imagenes
+  .row
+    .col-xs-12
+      .box.center-box
+        for picture in pictures
+          .row.border-grey.tr
+            .col-xs-10
+              h2=picture.title
+            .col-xs-2.text-right.middle-text
+              a(href="/app/pictures/#{picture._id}/edit",class="margin-right_little") Editar
+              a(href="/app/pictures/#{picture._id}/",class="margin-right_little") Eliminar
