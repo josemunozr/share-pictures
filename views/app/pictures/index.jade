@@ -10,4 +10,6 @@ block contenido
               h2=picture.title
             .col-xs-2.text-right.middle-text
               a(href="/app/pictures/#{picture._id}/edit",class="margin-right_little") Editar
-              a(href="/app/pictures/#{picture._id}/",class="margin-right_little") Eliminar
+              form(action="/app/pictures/#{picture._id}?_method=DELETE", method="POST", class="link")
+                input(type="submit", value="Eliminar") 
+
