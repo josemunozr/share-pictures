@@ -1,5 +1,6 @@
 var express = require("express");
 var Picture = require("./models/picture");
+var finder_picture_middlewares = require("./middlewares/finder-picture");
 var router = express.Router();
 
 router.get("/", function (req, res) {
@@ -10,30 +11,25 @@ router.get("/pictures/new", function (req, res) {
   res.render("app/pictures/new")
 });
 
+router.all("/pictures/:id*", finder_picture_middlewares);
+
 router.get("/pictures/:id/edit", function (req, res) {
-  Picture.findById(req.params.id, function (err, picture) {
-      res.render("app/pictures/edit",{picture: picture});
-    })
+  res.render("app/pictures/edit");
 });
 
 router.route("/pictures/:id")
   .get(function (req, res) {
-    Picture.findById(req.params.id, function (err, picture) {
-      res.render("app/pictures/show",{picture: picture});
-    })
+    res.render("app/pictures/show");
   })
   .put(function (req, res) {
-     Picture.findById(req.params.id, function (err, picture) {
-      picture.title = req.body.title;
-      picture.save(function (err) {
-        if(!err){
-          res.render("app/pictures/show", {picture : picture});
-        }else {
-          res.render("app/picture/" + picture._id + "/edit", {picture : picture});
-        }
-      });
-
-    })
+    res.locals.picture.title = req.body.title;
+    res.locals.picture.save(function (err) {
+      if(!err){
+        res.render("app/pictures/show");
+      }else {
+        res.render("app/picture/" + req.params.id + "/edit");
+      }
+    });
   })
   .delete(function (req, res) {
     Picture.findOneAndRemove({_id: req.params.id}, function (err, picture) {
