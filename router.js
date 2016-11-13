@@ -44,14 +44,15 @@ router.route("/pictures/:id")
 
 router.route("/pictures")
   .get(function (req, res) {
-    Picture.find({}, function (err, pictures) {
+    Picture.find({ creator: res.locals.user._id }, function (err, pictures) {
       if(err) {res.redirect("/app"); return; }
       res.render("app/pictures/index", {pictures : pictures});
     })
   })
   .post(function (req, res) {
     var picture = new Picture({
-      title : req.body.title
+      title : req.body.title,
+      creator: res.locals.user._id
     })
 
     picture.save(function (err) {
