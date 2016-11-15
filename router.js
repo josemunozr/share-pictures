@@ -5,7 +5,12 @@ var finder_picture_middlewares = require("./middlewares/finder-picture");
 var router = express.Router();
 
 router.get("/", function (req, res) {
-  res.render("app/home");
+  Picture.find({})
+    .populate("creator")
+    .exec(function (err, pictures) {
+      if(err) { console.log(err)}
+      res.render("app/home", {pictures: pictures});
+    })
 })
 
 router.get("/pictures/new", function (req, res) {

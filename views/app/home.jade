@@ -1,5 +1,7 @@
 extends ../layout.jade
 block contenido
-  h1 Home 
-    strong #{user.username}
-  a(href="/app/pictures/new") subir imagen
+  for picture in pictures
+    .img-container
+      h2= picture.title
+      img(src="/public/imgs/#{picture._id}.#{picture.extension}", class="img")
+      p Por #{picture.creator.email}
