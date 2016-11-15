@@ -1,4 +1,5 @@
 var express = require("express");
+var fs = require("fs");
 var Picture = require("./models/picture");
 var finder_picture_middlewares = require("./middlewares/finder-picture");
 var router = express.Router();
@@ -44,19 +45,24 @@ router.route("/pictures/:id")
 
 router.route("/pictures")
   .get(function (req, res) {
-    Picture.find({  }, function (err, pictures) {
+    Picture.find({ creator: res.locals.user._id }, function (err, pictures) {
       if(err) {res.redirect("/app"); return; }
       res.render("app/pictures/index", {pictures : pictures});
     })
   })
   .post(function (req, res) {
+    var extension = req.files.file.name.split(".").pop();
+
     var picture = new Picture({
-      title : req.body.title,
-      creator: res.locals.user._id
+      title : req.fields.title,
+      creator: res.locals.user._id,
+      extension: extension
     })
 
     picture.save(function (err) {
       if (!err) {
+
+        fs.rename(req.files.file.path, "public/imgs/" + picture._id + "." + extension);
         res.redirect("/app/pictures/" + picture._id);
       }else {
         res.render(err);

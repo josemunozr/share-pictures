@@ -4,7 +4,7 @@ block contenido
     .col-xs-6
       .box
         h1 Subir Imagen
-        form(action="/app/pictures", method="POST", class="text-left")
+        form(action="/app/pictures", method="POST", class="text-left", enctype="multipart/form-data")
           .form-group
             label(form="title") Título
             input(type="text", name="title",placeholder="Título",id="title",class="form-control")
