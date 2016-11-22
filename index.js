@@ -1,5 +1,4 @@
 var express = require("express");
-/*var bodyParser = require("body-parser");*/
 var mongoose = require("mongoose");
 var session = require("express-session");
 var methodOverride = require("method-override");
@@ -8,28 +7,25 @@ var user = require("./models/user");
 var router = require("./router");
 var session_mdl = require("./middlewares/session");
 var RedisStore = require("connect-redis")(session);
-
-var app = express();
-var User = user.User;
-
-mongoose.connect("mongodb://localhost/pictures")
-
-
-app.use("/public", express.static("public"))
-/*app.use(bodyParser.json()) // para peticiones application/json
-app.use(bodyParser.urlencoded({extended: true}))*/
-app.use(methodOverride("_method"));
-app.use(formidable());
-
-/*app.use(cookieSession({
-  name: "picture-session",
-  keys: ["asd","asqw","2134wef"]
-}))*/
+var http = require("http");
+var realtime = require("./realtime");
 
 var sessionMiddleware = session({
   store: new RedisStore({}),
   secret: "Super M3ga Pass!!!"
 })
+
+var app = express();
+var server = http.Server(app);
+var User = user.User;
+
+realtime(server,sessionMiddleware);
+
+mongoose.connect("mongodb://localhost/pictures")
+
+app.use("/public", express.static("public"))
+app.use(methodOverride("_method"));
+app.use(formidable());
 
 app.use(sessionMiddleware);
 
@@ -81,6 +77,6 @@ app.post("/session", function (req, res) {
 app.use("/app", session_mdl);
 app.use("/app", router);
 
-app.listen(8080, function () {
+server.listen(8080, function () {
   console.log("listen server at http://localhost:8080/");
 });
