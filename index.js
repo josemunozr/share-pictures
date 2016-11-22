@@ -1,12 +1,13 @@
 var express = require("express");
 /*var bodyParser = require("body-parser");*/
 var mongoose = require("mongoose");
-var cookieSession = require("cookie-session");
+var session = require("express-session");
 var methodOverride = require("method-override");
 var formidable = require("express-formidable");
 var user = require("./models/user");
 var router = require("./router");
 var session_mdl = require("./middlewares/session");
+var RedisStore = require("connect-redis")(session);
 
 var app = express();
 var User = user.User;
@@ -20,10 +21,17 @@ app.use(bodyParser.urlencoded({extended: true}))*/
 app.use(methodOverride("_method"));
 app.use(formidable());
 
-app.use(cookieSession({
+/*app.use(cookieSession({
   name: "picture-session",
   keys: ["asd","asqw","2134wef"]
-}))
+}))*/
+
+var sessionMiddleware = session({
+  store: new RedisStore({}),
+  secret: "Super M3ga Pass!!!"
+})
+
+app.use(sessionMiddleware);
 
 app.set("view engine","jade");
 
