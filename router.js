@@ -75,4 +75,10 @@ router.route("/pictures")
     })
   });
 
+router.route("/close")
+  .get(function (req, res) {
+    req.session.user_id = undefined;
+
+    res.redirect("/singin");
+  })
 module.exports = router;
