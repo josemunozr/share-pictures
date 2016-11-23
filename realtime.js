@@ -10,7 +10,10 @@ module.exports = function (server, sessionMiddleware) {
   });
 
   client.on("message", function (channel, message) {
-    console.log(message);
+    if(channel == "pictures"){
+      console.log(message)
+      io.emit("new picture", message);
+    }
   })
 
   io.sockets.on("connection", function (socket){

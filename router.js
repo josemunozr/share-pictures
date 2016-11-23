@@ -69,7 +69,14 @@ router.route("/pictures")
 
     picture.save(function (err) {
       if (!err) {
-        client.publish("pictures", picture.toString())
+
+        var pictJson = {
+          "id": picture._id,
+          "title": picture.title,
+          "extension": picture.extension
+        }
+
+        client.publish("pictures", JSON.stringify(pictJson));
         fs.rename(req.files.file.path, "public/imgs/" + picture._id + "." + extension);
         res.redirect("/app/pictures/" + picture._id);
       }else {
