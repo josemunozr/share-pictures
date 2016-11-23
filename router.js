@@ -1,8 +1,11 @@
 var express = require("express");
 var fs = require("fs");
+var redis = require("redis");
 var Picture = require("./models/picture");
 var finder_picture_middlewares = require("./middlewares/finder-picture");
 var router = express.Router();
+
+var client = redis.createClient();
 
 router.get("/", function (req, res) {
   Picture.find({})
@@ -66,7 +69,7 @@ router.route("/pictures")
 
     picture.save(function (err) {
       if (!err) {
-
+        client.publish("pictures", picture.toString())
         fs.rename(req.files.file.path, "public/imgs/" + picture._id + "." + extension);
         res.redirect("/app/pictures/" + picture._id);
       }else {
