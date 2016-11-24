@@ -1,12 +1,12 @@
 extends ../../layout.jade
 block contenido
-  h1 Mis Imagenes
-  .row
-    .col-xs-12
+  h1.text-center Mis Imagenes
+  .row.center-xs
+    .col-xs-11.col-md-6
       .box.center-box
         for picture in pictures
           .row.border-grey.tr
-            .col-xs-10
+            .col-xs-10.text-left
               h2=picture.title
             .col-xs-2.text-right.middle-text
               a(href="/app/pictures/#{picture._id}/edit",class="margin-right_little") Editar

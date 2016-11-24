@@ -1,7 +1,7 @@
 extends ../../layout.jade
 block contenido
-  .row.center-xs.middle-xs.full-height
-    .col-xs-6
+  .row.center-xs.middle-xs.full-height.full-width
+    .col-xs-11.col-sm-4.col-md-3
       .box
         h1 Subir Imagen
         form(action="/app/pictures", method="POST", class="text-left", enctype="multipart/form-data")
@@ -12,5 +12,5 @@ block contenido
             label(form="file") Imagen
             input(type="file", name="file",placeholder="Password",id="file",class="form-control")
           .row
-            .col-xs-6
-              input(type="submit", value="Subir", class="btn btn-info")
+            .col-xs-12
+              input(type="submit", value="Subir", class="btn btn-info full-width")

@@ -41,8 +41,16 @@ form.link input[type="submit"] {
   height: 100%;
 }
 
+.full-width {
+  width: 100%;
+}
+
 .text-left {
   text-align: left;
+}
+
+.text-center {
+  text-align: center;
 }
 .text-right {
   text-align: right;
