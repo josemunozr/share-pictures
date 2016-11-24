@@ -11,8 +11,8 @@ module.exports = function (server, sessionMiddleware) {
 
   client.on("message", function (channel, message) {
     if(channel == "pictures"){
-      console.log(message)
-      io.emit("new picture", message);
+
+      io.emit("picture:new", message);
     }
   })
 

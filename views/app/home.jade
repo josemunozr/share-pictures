@@ -1,8 +1,18 @@
 extends ../layout.jade
 block contenido
-  for picture in pictures
+  #pictures
+    for picture in pictures
+      .img-container
+        a(href="/app/pictures/#{picture._id}")
+          h2 #{picture.title}
+        img(src="/public/imgs/#{picture._id}.#{picture.extension}", class="img")
+        if(typeof picture.creator != "undefined")
+          p Por #{picture.creator.email}
+
+  script(id="tpl-pictures", type="text/x-handlebars-template")
     .img-container
-      h2= picture.title
-      img(src="/public/imgs/#{picture._id}.#{picture.extension}", class="img")
-      p Por #{picture.creator.email}
+      a(href="/app/pictures/{{id}}")
+        h2 {{title}}
+      img(src="/public/imgs/{{id}}.{{extension}}", class="img")
   script(src="/public/js/client.js")
+  
